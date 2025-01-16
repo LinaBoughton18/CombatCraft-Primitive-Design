@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Hexagon
   m_EditorClassIdentifier: 
   itemName: Hexagon
-  statToChange: 1
-  amountToChangeStat: 2
+  shape: 1
+  conditionList: 0000000003000000
+  damageList: 00000000

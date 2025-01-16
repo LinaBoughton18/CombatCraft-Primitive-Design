@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3565785188894485653}
   - component: {fileID: 3686314375914189583}
   - component: {fileID: 783335229229756919}
+  - component: {fileID: 7274051312377820203}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -20,21 +21,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5396568976299644697
-Transform:
+--- !u!224 &5396568976299644697
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767172135528721075}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.52, y: 1.22, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 2.34, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4.52, y: 1.22}
+  m_SizeDelta: {x: 1, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &6984897592614598662
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -127,9 +132,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerRigidbody: {fileID: 0}
   playerController: {fileID: 0}
   speed: 0.001
   enemyBaseDamage: -2
+  targetPositionDot: {fileID: 0}
+  movementStyle: 0
+  closingVelocity: {x: 0, y: 0}
+  relativeDistance: {x: 0, y: 0}
+  closingTime: 0
+  targetPosition: {x: 0, y: 0}
+  targetDirection: {x: 0, y: 0}
 --- !u!61 &783335229229756919
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -175,3 +188,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!222 &7274051312377820203
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767172135528721075}
+  m_CullTransparentMesh: 1
