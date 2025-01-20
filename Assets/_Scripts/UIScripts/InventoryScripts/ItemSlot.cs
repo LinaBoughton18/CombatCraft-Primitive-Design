@@ -9,29 +9,26 @@ using UnityEditor;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
 {
-    //=====ITEM DATA=====//
-    // Stores the information about the item
-    public string itemName;
-    public int quantity;
-    public Sprite itemSprite;
-    public bool isFull; // tracks if this slot is occupied or not
-    public string itemDescription;
-    public Sprite emptySprite; // An empty sprite that shows a checkmark
+    //===== ITEM DATA =====//
+    public ItemSO itemSO; // A reference to the data about the item
 
-    //=====ITEM SLOT=====//
-    // Stores information about the slot itself (display, text, etc.)
+    //====== ITEM SLOT DATA =====//
+    public int slotQuantity; // tracks the number of items in the slot
+    public bool isFull; // tracks if this slot is occupied or not
+    public Sprite emptySprite; // An empty sprite that shows a checkmark
+    private int maxNumberOfItems = 999; // The maximum number of item that can fit in an item slot
+
+    public bool isInQueue; // Notates if an item is in the spellQueue or not
+
+    //===== SLOT VISUALS =====//
+    // Stores information about the visual slot (display, text, etc.)
     [SerializeField]
     private TMP_Text quantityText; // Displays quantity text
-
     [SerializeField]
     public Image itemImage; // Picture that displays in the slot
 
     public GameObject selectedShader;
     public bool thisItemSelected;
-
-    public bool isInQueue; // Notates if an item is in the spellQueue or not
-
-    private int maxNumberOfItems = 999; // The maximum number of item that can fit in an item slot
 
     //====ITEM DESCRIPTION SLOT====//
     public Image itemDescriptionImage;
@@ -46,40 +43,38 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
 
         isInQueue = false;
+        isFull = false;
     }
 
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
+    public int AddItem(ItemSO itemSO, int quantity)
     {
-        // Check to see if the slot is already full, if it is then return the quantity
+        // Check to see if the slot is already full, if it is then return the quantity & exit
         if (isFull)
         {
             return quantity;
         }
 
-        // Updates the item data
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        
+        this.itemSO = itemSO;
+
         // Changes slot's apperance
-        this.itemSprite = itemSprite;
-        itemImage.sprite = itemSprite;
+        itemImage.sprite = itemSO.sprite;
 
         // Updates the text to show that the slot is full
-        this.quantity += quantity;
-        if (this.quantity >= maxNumberOfItems)
+        slotQuantity += quantity;
+        if (slotQuantity >= maxNumberOfItems)
         {
             quantityText.text = maxNumberOfItems.ToString();
             quantityText.enabled = true;
             isFull = true;
         
             // Return the LEFTOVERS
-            int extraItems = this.quantity - maxNumberOfItems;
-            this.quantity = maxNumberOfItems;
+            int extraItems = slotQuantity - maxNumberOfItems;
+            slotQuantity = maxNumberOfItems;
             return extraItems;
         }
 
         // Update quantity text
-        quantityText.text = this.quantity.ToString();
+        quantityText.text = slotQuantity.ToString();
         quantityText.enabled = true;
 
         return 0;
@@ -122,9 +117,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
             thisItemSelected = true;
 
             // Edits the UI for the description section
-            itemDescriptionNameText.text = itemName;
-            itemDescriptionText.text = itemDescription;
-            itemDescriptionImage.sprite = itemSprite;
+            itemDescriptionNameText.text = itemSO.itemName;
+            itemDescriptionText.text = itemSO.itemDescription;
+            itemDescriptionImage.sprite = itemSO.sprite;
             if (itemDescriptionImage.sprite == null)
             {
                 itemDescriptionImage.sprite = emptySprite;
@@ -148,20 +143,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
         // Create a new item that spawns by the player
         // when an inventory item is dropped
         // Creates a gameobject with the name itemName
-        GameObject itemToDrop = new GameObject(itemName);
+        GameObject itemToDrop = new GameObject(itemSO.itemName);
         // Puts the Item script on our game object
+
+        // Adds the proper itemSO to our item
         Item newItem = itemToDrop.AddComponent<Item>();
-        
-        // Sets the data of the item
-        newItem.quantity = 1;
-        newItem.itemName = itemName;
-        newItem.sprite = itemSprite;
-        newItem.itemDescription = itemDescription;
+        newItem.itemSO = itemSO; // ERROR = this sets it so that all but 1 of the items are lost, dropping 1 singular item
 
         // Create and modify the sprite renderer
         // Adding the sprite renderer to the newly created item
         SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
-        sr.sprite = itemSprite;
+        sr.sprite = itemSO.sprite;
         // Sorting order determines the layer in the hierarchy
         sr.sortingOrder = 5;
         sr.sortingLayerName = "Ground";
@@ -183,11 +175,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
     public void SubtractItem()
     {
         // Subtracts the item from the inventory & updates display text
-        this.quantity -= 1;
-        quantityText.text = this.quantity.ToString();
+        slotQuantity -= 1;
+        quantityText.text = slotQuantity.ToString();
 
         // If quantity = 0, empty the slot
-        if (this.quantity <= 0)
+        if (slotQuantity <= 0)
         {
             EmptySlot();
         }

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hexagon
   m_EditorClassIdentifier: 
   itemName: Hexagon
-  shape: 1
+  sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+  itemDescription: This is the coolest hexagon you've ever seen.
+  shape: 2
   conditionList: 0000000003000000
   damageList: 00000000

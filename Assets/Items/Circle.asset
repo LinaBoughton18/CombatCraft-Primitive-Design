@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Circle
   m_EditorClassIdentifier: 
   itemName: Circle
+  sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  itemDescription: A round boy. Death incarnate
   shape: 5
   conditionList: 
   damageList: 02000000

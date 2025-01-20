@@ -31,7 +31,7 @@ public class HUDItemSlot : MonoBehaviour
     public void UpdateItemSlot(ItemSlot itemSlotToCopy)
     {
         itemImage.sprite = itemSlotToCopy.itemImage.sprite; // Update image displayed
-        quantityText.text = itemSlotToCopy.quantity.ToString(); // Update quantity displayed
+        quantityText.text = itemSlotToCopy.slotQuantity.ToString(); // Update quantity displayed
         quantityText.enabled = true; // Update quantity text
         selectedShader.SetActive(itemSlotToCopy.isInQueue); // Update selection box in accordance with the itemSlot
     }

@@ -17,6 +17,13 @@ public class ItemSO : ScriptableObject
     // Eventually, I can add stuff like image, description text, etc. but not right now
     public string itemName;
 
+    // The item's image sprite
+    public Sprite sprite;
+
+    // The description of the item in the inventory
+    [TextArea] // This line gives us a big box in the Unity Editor in which we can edit the text!
+    public string itemDescription;
+
     //-----ITEM PROPERTIES-----//
     /*
     Since we want everything to be decoupled (not dependent on each other), the classes will call their own methods & pass them along to each other

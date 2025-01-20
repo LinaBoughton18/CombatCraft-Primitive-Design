@@ -97,19 +97,19 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Adds an item to the inventory
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
+    // OLD VERSION: public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
+    public int AddItem(ItemSO itemSO, int quantity)
     {
         // Cycles through every item slot in the inventory, starting with the first
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            // If the item slot is not full and matches the item already in there
-            // OR if the item slot is empty
-            if (!itemSlot[i].isFull && itemSlot[i].itemName == itemName || itemSlot[i].quantity <= 0)
+            if (!itemSlot[i].isFull && itemSlot[i].itemSO == itemSO || itemSlot[i].slotQuantity <= 0)
             {
-                int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription);
+                int leftOverItems = itemSlot[i].AddItem(itemSO, quantity);
                 if (leftOverItems > 0)
                 {
-                    leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription);
+                    leftOverItems = AddItem(itemSO, leftOverItems);
+                    // THIS LINE ABOVE USED TO TAKE THE LEFTOVERS AND ADD THEM TO A DIFFERENT SLOT, I GOT RID OF IT, MAY NEED TO BE FIXED IDK
 
                     UpdateHUD();
                     return leftOverItems;
@@ -121,6 +121,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+        // If there are no avaiable slots in the inventory:
         UpdateHUD();
         return quantity;
     }
@@ -130,7 +131,7 @@ public class InventoryManager : MonoBehaviour
     {
         int inventoryIndexToCheck = HUDRowSelected + correspondingHUDSlot;
         // If item slot is empty -> return nothing
-        if (itemSlot[inventoryIndexToCheck].quantity <= 0)
+        if (itemSlot[inventoryIndexToCheck].slotQuantity <= 0)
         {
             return null;
         }

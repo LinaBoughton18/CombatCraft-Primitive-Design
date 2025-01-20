@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Triangle
   m_EditorClassIdentifier: 
   itemName: Triangle
+  sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  itemDescription: Sharp and pointy. Yeowch!
   shape: 4
   conditionList: 
   damageList: 0100000002000000

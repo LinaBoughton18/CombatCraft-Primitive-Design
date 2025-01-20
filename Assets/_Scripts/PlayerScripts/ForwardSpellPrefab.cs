@@ -44,19 +44,7 @@ public class ForwardSpellPrefab : MonoBehaviour
         {
             if (i != null)
             {
-                // Use the itemName to find the corresponding item in itemSOs
-                string newItemName = i.itemName;
-
-                // Iterate through each item in itemSOs to find the matching itemSO
-                // That itemSO (itemSO[j]), is added to itemList
-                for (int j = 0; j < inventoryManager.itemSOs.Length; j++)
-                {
-                    if (inventoryManager.itemSOs[j].itemName == newItemName)
-                    {
-                        itemList.Add(inventoryManager.itemSOs[j]);
-                        break;
-                    }
-                }
+                itemList.Add(i.itemSO);
             }
             else
             {
@@ -65,16 +53,26 @@ public class ForwardSpellPrefab : MonoBehaviour
         }
         itemList.TrimExcess(); // Removes the excess memory
 
-        StockDebug.PrintArray(itemList.ToArray(), s => s.itemName, "itemList now contains: ", false);
+        // Sets the spells various magical & spacial properties
+        DetermineProperties();
+        DetermineOriginAndMovement();
+        DetermineScale();
 
-        // For conditionList & damageList, iterate through each using foreach
-        // Iterate through itemList, grab each item's conditions & damages respectively
+        //PrintSpellProperties();
+    }
+
+    // Determine damage, conditions, and shape
+    void DetermineProperties()
+    {
+        // (For conditionList & damageList, iterate through each using foreach
+        // Iterate through itemList, grab each item's conditions & damages respectively)
 
         // Create the list of spellProperties
-        // CURRENTLY: all just strings, that get output in a debug message
-        // TO EDIT: make the properties into enumerations or prefabs
 
-        //Iterate through each item in itemList, updating the damage, conditions, and shape as you go
+        // Start by setting the default shape to the lowest priority
+        shape = GrandPropertyList.Shape.beam_circle;
+
+        // Iterate through each item in itemList, updating the damage, conditions, and shape as you go
         foreach (ItemSO i in itemList)
         {
             // Iterate through every condition in that item's conditionList
@@ -98,19 +96,13 @@ public class ForwardSpellPrefab : MonoBehaviour
             }
 
             // Check the shape property for this item in itemList
-            // If the shapeToAdd has greater priority than the current shape, change it to the newShape
+            // If the shapeToTest has greater priority than the current shape, change it to the new shape
             GrandPropertyList.Shape shapeToTest = i.shape;
             if ((int)shapeToTest < (int)this.shape)
             {
                 this.shape = shapeToTest;
             }
         }
-
-        // Determines the spell's properties
-        DetermineOriginAndMovement();
-        DetermineScale();
-
-        PrintSpellProperties();
     }
 
     // Sets the origin & direction for the spell
