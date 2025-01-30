@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleConeSpawner : MonoBehaviour
+public class ForwardLine : MonoBehaviour, ISpellShape
 {
-    [Header("Cone Settings")]
-    public float coneAngle = 30f; // Half of the cone's total angle
+    [Header("Beam Settings")]
+    public float beamWidth = 5f; // The beam's total width CURRENTLY UNUSED!
     public float coneLength = 5f; // Maximum distance the particles will travel
     public int particleCount = 50; // Number of particles to spawn
 
     [Header("Particle Settings")]
     public GameObject particlePrefab; // Prefab for the particle
 
-    void Update()
+    public void Execute()
     {
-        if (Input.GetMouseButtonDown(0)) // Left-click to spawn particles
-        {
-            SpawnParticles();
-        }
+        StartCoroutine(SpawnParticles());
     }
 
-    void SpawnParticles()
+    IEnumerator SpawnParticles()
     {
         // Get the player's position
         Vector3 playerPosition = transform.position;
@@ -28,14 +25,11 @@ public class ParticleConeSpawner : MonoBehaviour
         // Calculate the direction to the mouse
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f; // Ensure the Z position matches the player's 2D plane
-        Vector3 coneDirection = (mouseWorldPosition - playerPosition).normalized;
+        Vector3 beamDirection = (mouseWorldPosition - playerPosition).normalized;
 
-        // Spawn particles within the cone
+        // Spawn particles within the beam
         for (int i = 0; i < particleCount; i++)
         {
-            // Generate a random direction within the cone
-            Vector3 randomDirection = GetRandomDirectionInCone(coneDirection, coneAngle);
-
             // Instantiate the particle
             GameObject particle = Instantiate(particlePrefab, playerPosition, Quaternion.identity);
 
@@ -43,18 +37,9 @@ public class ParticleConeSpawner : MonoBehaviour
             SpellParticleMovement mover = particle.GetComponent<SpellParticleMovement>();
             if (mover != null)
             {
-                mover.Initialize(randomDirection, coneLength);
+                mover.Initialize(beamDirection, coneLength);
             }
+            yield return new WaitForSeconds(.01f);
         }
-    }
-
-    Vector3 GetRandomDirectionInCone(Vector3 coneDirection, float angle)
-    {
-        // Generate a random rotation within the cone
-        float randomAngle = Random.Range(-angle, angle);
-        Quaternion rotation = Quaternion.AngleAxis(randomAngle, Vector3.forward);
-
-        // Apply the rotation to the cone direction
-        return rotation * coneDirection;
     }
 }

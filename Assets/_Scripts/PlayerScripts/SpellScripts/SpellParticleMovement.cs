@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpellParticleMovement : MonoBehaviour
 {
+    // Moves a particle in a direction for for a certain distance
+
     private Vector3 moveDirection;
     private float maxDistance;
     private Vector3 startPosition;

@@ -59,6 +59,9 @@ public class ForwardSpellPrefab : MonoBehaviour
         DetermineScale();
 
         //PrintSpellProperties();
+
+        // Once all the properties have been collected, spawn the spell in
+        CreateSpell();
     }
 
     // Determine damage, conditions, and shape
@@ -156,5 +159,26 @@ public class ForwardSpellPrefab : MonoBehaviour
         Debug.Log("Origin: " + origin + " (should match the player position)");
         Debug.Log("Direction: " + direction);
         Debug.Log("Scale: " + scale);
+    }
+
+    private void CreateSpell()
+    {
+        // Shape is the most defining thing... I think
+        // Instantiate a script and/or nab the appropriate shape-based behavior (for forward casted spells)
+        // ^ Add in the proper origin, scale, direction, speed, etc.
+        // Pull the proper sprites & other info from the damages & conditions (damages & conditions shall be their own SO's now!)
+
+        // Spawn in the spell particles (reference behavior from ParticleConeSpawner)
+        // (Spell particles reference SpellParticleMovement)
+
+
+
+        // Grab appropriate behavior from a script to spawn the particles (Interface?)
+        // 
+
+
+        // Spell: spell class, replaces forwardspellPrefab
+        // ISpellShape: the interface for different spell shapes
+            // ForwardConeShape, ForwardBeamShape, ForwardCircleShape, etc: the interfaces that use the spell shape behavior & execute them
     }
 }

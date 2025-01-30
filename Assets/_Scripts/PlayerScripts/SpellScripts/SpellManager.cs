@@ -18,8 +18,8 @@ public class SpellManager : MonoBehaviour
     // The spellQueue UI, updates to match the spellQueue
     public SpellQueueSlot[] spellQueueSlot;
 
-    // A prefab for the forward casted spells
-    public ForwardSpellPrefab forwardSpellPrefab;
+    // A prefab for the casted spells
+    public Spell spell;
 
     private KeyCode forwardCastKey = KeyCode.Mouse0;
     private KeyCode areaCastKey = KeyCode.Mouse1;
@@ -41,10 +41,11 @@ public class SpellManager : MonoBehaviour
     // THERE ARE EDITS TO DO WITHIN
     public void SpellPrepAndCast()
     {
+        #region //----------SPELL PREP----------//
         // Adds or removes items from the SpellQueue
         // Checks for keys #1-#5 down & if those are in the inventory -> Adds components to the spell if available
         // If the corresponding inventory item is already in the spellQueue -> removes the item
-        
+
         // spellQueueSize = 5
         // runs as keyDown = 1, 2, 3, 4, 5. Done.
         for (int keyDown = 1; keyDown <= spellQueueSize; keyDown++)
@@ -70,7 +71,9 @@ public class SpellManager : MonoBehaviour
                 }
             }
         }
+        #endregion
 
+        #region //----------SPELL CAST----------//
         // Casts the spell -> forward, area, self casting
         for (int i = 0; i < castingKeys.Length; i++)
         {
@@ -78,13 +81,8 @@ public class SpellManager : MonoBehaviour
             {
                 if (!SpellQueueEmpty())
                 {
-                    // Instantates the spell based on the casting key pressed
-                    switch (i)
-                    {
-                        case 0: ForwardCast(); break;
-                        case 1: /*AreaCast();*/ break; // Commented out because those functions don't exist yet
-                        case 2: /*SelfCast()*/ break;
-                    }
+                    // Casts the spell, spawning in a spell object
+                    SpellCast(i);
 
                     // Decrement the quantities of the items from the inventory
                     inventoryManager.DecrementItemsInSpell(spellQueue);
@@ -94,6 +92,7 @@ public class SpellManager : MonoBehaviour
                 }
             }
         }
+        #endregion
 
     }
 
@@ -159,11 +158,10 @@ public class SpellManager : MonoBehaviour
         UpdateSpellQueueUI();
     }
 
-    public void ForwardCast()
+    public void SpellCast(int castingType)
     {
-        // Instantiates a forward casted spell and passes along the items in the spellQueue 
-        ForwardSpellPrefab newSpell = Instantiate(forwardSpellPrefab, new Vector2(0,0), Quaternion.identity);
-        newSpell.PassItems(spellQueue);
+        Spell newSpell = Instantiate(spell, new Vector2(0, 0), Quaternion.identity);
+        newSpell.PassInfo(spellQueue, castingType);
     }
 
     public void UpdateSpellQueueUI()
