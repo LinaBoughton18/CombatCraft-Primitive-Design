@@ -12,7 +12,9 @@ using UnityEngine.UIElements;
 public class StockDebug
 {
     // Prints out the contents of an array's attributes. As input, takes the array, the attribute or variable to print out,
-    // the text that starts the message, and if null items should be printed or not
+    // the text that starts the message, and if null items should be printed or not.
+    // Lists need to be called with the   .ToArray() function
+    // Example of proper call: StockDebug.PrintArray(itemList.ToArray(), item => item.itemName, "Item List = ", false);
     public static void PrintArray<T, TProperty>(T[] array, Func<T, TProperty> propertySelector, string startingText, bool printNulls)
     {
         string finalMessage = startingText;

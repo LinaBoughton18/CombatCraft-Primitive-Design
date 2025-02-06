@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a2c602985dbce42b2310ab58cfe3b0, type: 3}
+  m_Name: Foxtail Leaf
+  m_EditorClassIdentifier: 
+  itemName: Foxtail Leaf
+  sprite: {fileID: 21300000, guid: 780159831aefa34419487fef2df75ca4, type: 3}
+  itemDescription: Named for its appearance, this is actually a leaf! The sharp spines
+    along the edge cause searing pain!
+  shape: {fileID: 11400000, guid: 63276ed7300732a44ab543d9c179e5be, type: 2}
+  conditionList: 0200000004000000
+  damageList: 00000000

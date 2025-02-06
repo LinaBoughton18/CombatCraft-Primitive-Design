@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject enemy;
+    // The prefab for a physical item
+    public GameObject itemPrefab; // Set in the Unity editor
 
-    public GameObject forage1;
-    public GameObject forage2;
-
-    // Start is called before the first frame update
-    void Start()
+    private ItemSODatabase itemSODatabase;
+    
+    void Awake()
     {
-        //InvokeRepeating("SpawnEnemy", 2f, 3f);
-        //InvokeRepeating("SpawnForage", 0f, 2f);
-        //SpawnEnemy();
+        itemSODatabase = GetComponent<ItemSODatabase>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        SpawnItem("Burberry", new Vector3(-4.31f, -4.32f, 0));
+        SpawnItem("Popping Seeds", new Vector3(-2.7f, -4.32f, 0));
+        SpawnItem("Neptune Salt", new Vector3(-1.4f, -4.32f, 0));
+        SpawnItem("Foxtail Leaf", new Vector3(0f, -4.32f, 0));
     }
 
+    /*
     void SpawnEnemy()
     {
         //Vector2 randomPosition = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         //Instantiate(enemy, randomPosition, enemy.transform.rotation);
 
-        Vector2 spawnPosition = new Vector2(6, 6);
-        Instantiate(enemy, spawnPosition, enemy.transform.rotation);
+        //Vector2 spawnPosition = new Vector2(6, 6);
+        //Instantiate(enemy, spawnPosition, enemy.transform.rotation);
     }
-    
-    void SpawnForage()
-    {
-        Vector2 randomPosition = new Vector2(Random.Range(-6, 6), Random.Range(-6, 6));
-        Instantiate(forage1, randomPosition, forage1.transform.rotation);
+    */
 
-        randomPosition = new Vector2(Random.Range(-6, 6), Random.Range(-6, 6));
-        Instantiate(forage2, randomPosition, forage2.transform.rotation);
+    public void SpawnItem(string itemName, Vector3 position)
+    {
+        // Finds the corresponding ItemSO
+        ItemSO itemSO = itemSODatabase.GetItemSOByName(itemName);
+
+        // Spawns in the item
+        GameObject newItem = Instantiate(itemPrefab, position, Quaternion.identity);
+
+        // Assigns the SO information
+        newItem.GetComponent<Item>().PassItemSOData(itemSO);
     }
 }

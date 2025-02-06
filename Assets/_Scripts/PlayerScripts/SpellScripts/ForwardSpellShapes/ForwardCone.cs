@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForwardCone : MonoBehaviour, ISpellShape
+[CreateAssetMenu]
+public class ForwardCone : SpellShapeSO
 {
     // LATER, THESE OUGHT TO CHANGE DYNAMICALLY, NOT BE SET AT THESE VALUES
     [Header("Cone Settings")]
@@ -21,7 +22,7 @@ public class ForwardCone : MonoBehaviour, ISpellShape
     void SpawnParticles()
     {
         // Get the player's position
-        Vector3 playerPosition = transform.position;
+        Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
         // Calculate the direction to the mouse
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

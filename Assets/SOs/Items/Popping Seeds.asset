@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a2c602985dbce42b2310ab58cfe3b0, type: 3}
+  m_Name: Popping Seeds
+  m_EditorClassIdentifier: 
+  itemName: Popping Seeds
+  sprite: {fileID: 21300000, guid: 8ccba3b62ba69874aab445d3691f25f1, type: 3}
+  itemDescription: Burst open on impact, sprouting roots that sink into the ground.
+    Handle with delicate care!
+  shape: {fileID: 11400000, guid: 1db8bcd154016314aa726cc21d4472e9, type: 2}
+  conditionList: 03000000
+  damageList: 05000000

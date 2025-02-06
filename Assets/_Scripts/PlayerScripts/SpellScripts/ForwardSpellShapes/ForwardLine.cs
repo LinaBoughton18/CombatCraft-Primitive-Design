@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForwardLine : MonoBehaviour, ISpellShape
+[CreateAssetMenu]
+public class ForwardLine : SpellShapeSO
 {
     [Header("Beam Settings")]
     public float beamWidth = 5f; // The beam's total width CURRENTLY UNUSED!
@@ -14,19 +15,20 @@ public class ForwardLine : MonoBehaviour, ISpellShape
 
     public void Execute()
     {
-        StartCoroutine(SpawnParticles());
+        //StartCoroutine(SpawnParticles());
+        SpawnParticles();
     }
 
     IEnumerator SpawnParticles()
     {
         // Get the player's position
-        Vector3 playerPosition = transform.position;
+        Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
         // Calculate the direction to the mouse
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f; // Ensure the Z position matches the player's 2D plane
         Vector3 beamDirection = (mouseWorldPosition - playerPosition).normalized;
-
+        
         // Spawn particles within the beam
         for (int i = 0; i < particleCount; i++)
         {
@@ -40,6 +42,7 @@ public class ForwardLine : MonoBehaviour, ISpellShape
                 mover.Initialize(beamDirection, coneLength);
             }
             yield return new WaitForSeconds(.01f);
+            
         }
     }
 }

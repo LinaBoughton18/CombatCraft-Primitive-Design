@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 
+// This class is for controlling player MOVEMENT!!!!!!!!!!
+
 public class PlayerController : MonoBehaviour
 {
     // Movement Data
@@ -11,57 +13,23 @@ public class PlayerController : MonoBehaviour
     private Vector2 playerInput;
     public float moveSpeed = 5f;
 
-    // Health Data
-    public int playerHealth;
-    public TMP_Text playerHealthText;
-    public int maxPlayerHealth = 20;
-
-    //=====FUNCTIONALITY=====//
-
-    private void Start() {
+    private void Awake()
+    {
         playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update() {
-
-    }
-
     // We do movement in fixedupdate because it's not dependant on frames, but time
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         MovePlayer();
     }
 
-    //=====MOVEMENT=====//
-    private void MovePlayer() {
+    private void MovePlayer()
+    {
+        // Grabs player input & normalizes it (so diagonals aren't faster)
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 playerInputNormalized = playerInput.normalized;
+        // Moves the player in the correct direction
         playerRigidbody.velocity = playerInputNormalized * moveSpeed;
-    }
-
-    //=====HEALTH=====//
-    public void PlayerHit(int baseDamage)
-    {
-        // Edits health value
-        // (in the future I can add fancy & complicated damage calculations like reducing damage based on type or something
-        ChangeHealth(baseDamage);
-
-        // Checks for player death
-        if (playerHealth <= 0)
-        {
-            Debug.Log("Player died :(");
-        }
-    }
-
-    public void ChangeHealth(int amountToChange)
-    {
-        // Edits health value
-        playerHealth += amountToChange;
-        if (playerHealth > maxPlayerHealth)
-        {
-            playerHealth = maxPlayerHealth;
-        }
-
-        // Edits Health UI
-        playerHealthText.text = "Health: " + playerHealth + " / " + maxPlayerHealth;
     }
 }

@@ -6,10 +6,6 @@ public class SpellManager : MonoBehaviour
 {
     private InventoryManager inventoryManager;
 
-    // The effect of the spell
-    // THIS IS A PLACEHOLDER
-    //public GameObject spellEffect;
-
     // The spellQueue, holds references to item slots w/ the items in there
     // By default, sets to [null, null, null, null, null]
     static int spellQueueSize = 5;
@@ -25,6 +21,9 @@ public class SpellManager : MonoBehaviour
     private KeyCode areaCastKey = KeyCode.Mouse1;
     private KeyCode selfCastKey = KeyCode.Mouse2;
     private KeyCode[] castingKeys;
+
+    // Helps with spell!
+    public SpellShapeSO defaultSpellShape; // Lowest ranking spellShape! (Assigned in Unity Editor!)
 
     void Awake()
     {

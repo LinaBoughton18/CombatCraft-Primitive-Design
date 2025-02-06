@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-
+/*
 public class ForwardSpellPrefab : MonoBehaviour
 {
     //------SCENE OBJECTS------//
@@ -19,7 +19,10 @@ public class ForwardSpellPrefab : MonoBehaviour
     // these are the properties in the spell
     [SerializeField] private List<GrandPropertyList.Condition> conditionList = new List<GrandPropertyList.Condition>();
     [SerializeField] private List<GrandPropertyList.Damage> damageList = new List<GrandPropertyList.Damage>();
-    [SerializeField] private GrandPropertyList.Shape shape;
+
+    // Old version of shape storage
+    //[SerializeField] private GrandPropertyList.Shape shape;
+    [SerializeField] private SpellShapeSO shape;
 
     //------ADDITIONAL SPELL PROPERTIES------//
     [SerializeField] private Vector2 origin; // Determines the starting point of the spell
@@ -143,7 +146,7 @@ public class ForwardSpellPrefab : MonoBehaviour
     For now, spell effects will just be strings. I'll figure the rest of that out later.
 
 */
-
+/*
     // A debug message that prints out the properties of the spell
     private void PrintSpellProperties()
     {
@@ -182,3 +185,4 @@ public class ForwardSpellPrefab : MonoBehaviour
             // ForwardConeShape, ForwardBeamShape, ForwardCircleShape, etc: the interfaces that use the spell shape behavior & execute them
     }
 }
+*/

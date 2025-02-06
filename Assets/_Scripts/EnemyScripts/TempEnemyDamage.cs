@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class TempEnemyDamage : MonoBehaviour
 {
+    /*
     // Movement
     public GameObject player;
-    public PlayerController playerController;
+    public PlayerHealth playerHealth;
 
     // Stats
     [SerializeField]
@@ -15,7 +16,7 @@ public class TempEnemyDamage : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        playerController = player.GetComponent<PlayerController>();
+        playerHealth = player.GetComponentInChildren<PlayerHealth>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,8 +30,9 @@ public class TempEnemyDamage : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            playerController.PlayerHit(enemyBaseDamage);
+            playerHealth.PlayerHit(enemyBaseDamage);
             Destroy(gameObject);
         }
     }
+    */
 }

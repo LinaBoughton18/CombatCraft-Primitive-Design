@@ -24,11 +24,11 @@ public class Spell : MonoBehaviour
     [SerializeField] private List<GrandPropertyList.Damage> damageList = new List<GrandPropertyList.Damage>();
 
     [SerializeField] private int castingType;
-    [SerializeField] private GrandPropertyList.Shape shape;
-    #endregion
+    // Older version
+    //[SerializeField] private GrandPropertyList.Shape shape;
+    // New version
+    [SerializeField] private SpellShapeSO shape;
 
-    #region //------SPELL SHAPE INTERFACES------//
-    private ISpellShape spellShape;
     #endregion
 
     #region //------ADDITIONAL SPELL PROPERTIES------//
@@ -42,13 +42,14 @@ public class Spell : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player");
-        spellManager = player.GetComponent<SpellManager>();
+        spellManager = player.GetComponentInChildren<SpellManager>();
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
     }
 
     // Grabs the items from the spellQueue and puts them in the itemList
     public void PassInfo(ItemSlot[] spellQueue, int castingType)
     {
+        Debug.Log("This is Spell, reporting from PassInfo!");
         // Create a list of the items (in ItemSO form) in this spell
         // Iterate through spellQueue, add each non-null element to itemList
         foreach (ItemSlot i in spellQueue)
@@ -80,17 +81,22 @@ public class Spell : MonoBehaviour
     // Determine damage, conditions, and shape
     void DetermineProperties()
     {
+        Debug.Log("Determining Properties!");
         // (For conditionList & damageList, iterate through each using foreach
         // Iterate through itemList, grab each item's conditions & damages respectively)
 
         // Create the list of spellProperties
 
-        // Start by setting the default shape to the lowest priority
-        shape = GrandPropertyList.Shape.beam_circle;
+        // Assigns shape to automatically be the lowest priority spellShapeSO
+        shape = spellManager.defaultSpellShape;
+        Debug.Log("shape assigned! shape = " + shape.name);
 
         // Iterate through each item in itemList, updating the damage, conditions, and shape as you go
         foreach (ItemSO i in itemList)
         {
+            Debug.Log("Checking item: " + i.itemName);
+
+            // CONDITIONS
             // Iterate through every condition in that item's conditionList
             // If that condition is not already in this spell's conditionList, add it
             foreach (GrandPropertyList.Condition j in i.conditionList)
@@ -101,9 +107,10 @@ public class Spell : MonoBehaviour
                 }
             }
 
+            // DAMAGES
             // Iterate through every damage in that item's damageList
             // If that damage is not already in this spell's conditionList, add it
-            foreach (GrandPropertyList.Damage j in i.conditionList)
+            foreach (GrandPropertyList.Damage j in i.damageList)
             {
                 if (!this.damageList.Contains(j))
                 {
@@ -113,8 +120,16 @@ public class Spell : MonoBehaviour
 
             // Check the shape property for this item in itemList
             // If the shapeToTest has greater priority than the current shape, change it to the new shape
-            GrandPropertyList.Shape shapeToTest = i.shape;
-            if ((int)shapeToTest < (int)this.shape)
+            SpellShapeSO shapeToTest = i.shape; // Grab's i's spellShapeSO
+
+            Debug.Log("i.shape = " + i.shape);       //OK so the current problem is that i.shape isn't set to anything
+            // This means that certain ItemSOs don't have shapes assigned to them, & that's something I can fix
+            Debug.Log("shapeToTest = " + shapeToTest);
+
+            Debug.Log("(int)shapeToTest.shape = " + (int)shapeToTest.shape);
+            Debug.Log("(int)this.shape.shape = " + (int)this.shape.shape);
+
+            if ((int)shapeToTest.shape < (int)this.shape.shape)
             {
                 this.shape = shapeToTest;
             }
@@ -138,7 +153,8 @@ public class Spell : MonoBehaviour
         // For now, scale is the number of items put into a spell
         scale = itemList.Count;
     }
-    #endregion
+
+    #endregion //----------------------------------------------//
 
     // A debug message that prints out the properties of the spell
     private void PrintSpellProperties()
@@ -180,7 +196,7 @@ public class Spell : MonoBehaviour
         //TODO
         // HOW DO WE WANT TO STORE SPELLSHAPES??? AS SO's perhaps? 
         // WE NEED TO FIGURE OUT HOW TO ASSIGN SPELLSHAPE in order to execute it!!!!
-        spellShape.Execute();
+        shape.concreteShapeBehavior.Execute();
     }
 
 
