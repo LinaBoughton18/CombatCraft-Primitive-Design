@@ -34,9 +34,17 @@ public class ItemSO : ScriptableObject
 
     public SpellShapeSO shape;
 
+    public GrandPropertyList.Shape shapeEnum;
+
     public GrandPropertyList.Condition[] conditionList;
 
     public GrandPropertyList.Damage[] damageList;
+
+
+
+    public DamageSO[] newDamageList;
+
+    public ConditionSO[] newConditionList;
 
     // I might add more types of lists later. The properties should be sorted based on when the enemies (or elements in the environment) call them.
     // I can also add methods here if I need to.

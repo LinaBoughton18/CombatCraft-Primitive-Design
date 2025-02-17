@@ -6,12 +6,17 @@ public class SpawnManager : MonoBehaviour
 {
     // The prefab for a physical item
     public GameObject itemPrefab; // Set in the Unity editor
-
+    // Database of itemSOs
     private ItemSODatabase itemSODatabase;
+
+    // The prefab for a physical enemy
+    public GameObject enemyPrefab; // Set in the Unity editor
+    private EnemySODatabase enemySODatabase;
     
     void Awake()
     {
         itemSODatabase = GetComponent<ItemSODatabase>();
+        enemySODatabase = GetComponent<EnemySODatabase>();
     }
 
     private void Start()
@@ -20,18 +25,24 @@ public class SpawnManager : MonoBehaviour
         SpawnItem("Popping Seeds", new Vector3(-2.7f, -4.32f, 0));
         SpawnItem("Neptune Salt", new Vector3(-1.4f, -4.32f, 0));
         SpawnItem("Foxtail Leaf", new Vector3(0f, -4.32f, 0));
+
+        //SpawnEnemy("Circle", new Vector3(9, 2, 0));
+        //SpawnEnemy("Circle", new Vector3(8, -7, 0));
     }
 
-    /*
-    void SpawnEnemy()
+    
+    void SpawnEnemy(string enemyName, Vector3 position)
     {
-        //Vector2 randomPosition = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
-        //Instantiate(enemy, randomPosition, enemy.transform.rotation);
+        // Finds the corresponding enemySO
+        EnemySO enemySO = enemySODatabase.GetEnemySOByName(enemyName);
 
-        //Vector2 spawnPosition = new Vector2(6, 6);
-        //Instantiate(enemy, spawnPosition, enemy.transform.rotation);
+        // Spawns in the enemy
+        GameObject newEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
+
+        // Assigns the SO information
+        newEnemy.GetComponent<EnemyBase2>().PassEnemySOData(enemySO);
     }
-    */
+    
 
     public void SpawnItem(string itemName, Vector3 position)
     {

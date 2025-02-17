@@ -17,5 +17,6 @@ MonoBehaviour:
   itemDescription: Just a pinch can make one feel sluggish and sleepy. Often used
     in hearty recipes.
   shape: {fileID: 11400000, guid: 1db8bcd154016314aa726cc21d4472e9, type: 2}
+  shapeEnum: 6
   conditionList: 04000000
   damageList: 

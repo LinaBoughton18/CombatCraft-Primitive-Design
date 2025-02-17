@@ -17,5 +17,6 @@ MonoBehaviour:
   itemDescription: Burst open on impact, sprouting roots that sink into the ground.
     Handle with delicate care!
   shape: {fileID: 11400000, guid: 1db8bcd154016314aa726cc21d4472e9, type: 2}
+  shapeEnum: 5
   conditionList: 03000000
   damageList: 05000000

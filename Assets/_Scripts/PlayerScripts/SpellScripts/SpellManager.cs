@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpellManager : MonoBehaviour
 {
+    // TESTING PURPOSES ONLY
+    public GameObject particlePrefab;
+
     private InventoryManager inventoryManager;
 
     // The spellQueue, holds references to item slots w/ the items in there

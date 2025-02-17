@@ -17,5 +17,6 @@ MonoBehaviour:
   itemDescription: Named for its appearance, this is actually a leaf! The sharp spines
     along the edge cause searing pain!
   shape: {fileID: 11400000, guid: 63276ed7300732a44ab543d9c179e5be, type: 2}
+  shapeEnum: 4
   conditionList: 0200000004000000
   damageList: 00000000

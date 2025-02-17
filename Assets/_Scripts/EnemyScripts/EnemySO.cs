@@ -13,7 +13,7 @@ public class EnemySO : ScriptableObject
 
     public int speed;
 
-    public int health;
+    public int maxHealth;
 
     public List<ItemTuple> itemsDropped;
 

@@ -16,5 +16,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 4c93ef70e7687774f8012b2eaa2503c1, type: 3}
   itemDescription: A tiny, but highly poisonous berry. Do not eat!
   shape: {fileID: 11400000, guid: 63276ed7300732a44ab543d9c179e5be, type: 2}
+  shapeEnum: 3
   conditionList: 01000000
   damageList: 01000000

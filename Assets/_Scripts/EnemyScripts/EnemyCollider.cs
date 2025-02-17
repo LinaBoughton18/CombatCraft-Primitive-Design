@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+
 public class EnemyCollider : MonoBehaviour
 {
-    // Movement
+    // Player Variables
     public GameObject player;
     public PlayerController playerController;
     public PlayerHealth playerHealth;
 
-    // Parent
+    // Parent Variables
     private GameObject parent;
     private EnemyBase2 parentBaseScript;
     private List<ItemTuple> itemsDropped;
@@ -18,8 +20,7 @@ public class EnemyCollider : MonoBehaviour
     private SpawnManager spawnManager;
 
     // Stats
-    [SerializeField]
-    private int enemyBaseDamage;
+    private bool isDead;
 
     private void Awake()
     {
@@ -35,22 +36,39 @@ public class EnemyCollider : MonoBehaviour
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
         playerHealth = player.GetComponentInChildren<PlayerHealth>();
+
+        // Enemy starts out alive!
+        isDead = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Spell Effect"))
         {
+            Debug.Log("Hit by: " + collision.name);
+
+            TakeDamage(); // eventually this function should be called with a numerical input
+
             Destroy(collision.gameObject);
+
+            if (parentBaseScript.currentHealth <= 0 && isDead == false)
+            {
+                isDead = true;
+                Die();
+            }
+        }
+        else if (collision.CompareTag("Player"))
+        {
+            //Debug.Log("Hit Player for " + enemyBaseDamage + " health");
+            playerHealth.PlayerHit(parentBaseScript.enemySO.damageDealt);
             Destroy(parent);
         }
+    }
 
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Hit Player for " + enemyBaseDamage + " health");
-            playerHealth.PlayerHit(enemyBaseDamage);
-            Die();
-        }
+    private void TakeDamage()
+    {
+        // Here's where I can add immunities, resistances, & weaknesses, etc.
+        parentBaseScript.currentHealth -= 6;
     }
 
     private void Die()
@@ -69,4 +87,5 @@ public class EnemyCollider : MonoBehaviour
 
         Destroy(parent);
     }
+
 }
