@@ -27,19 +27,19 @@ namespace LlamAcademy.FSM
 
         // IDK WHAT THE FOLLOWING THREE FUNCTIONS ARE DOING TBH
         // POSSIBLY SOMETHING TO DO WITH SPIT PARTICLE EFFECTS BUT IDK
-        private Spit CreateObject() // WHAT DOING?????????
+        private Spit CreateObject() // Unsure what this does
         {
             return GameObject.Instantiate(Prefab);
         }
 
-        private void GetObject(Spit Instance) // WHAT DOING?????????
+        private void GetObject(Spit Instance) // Unsure what this does
         {
             Instance.transform.forward = Enemy.transform.forward;
             Instance.transform.position = Enemy.transform.position + Enemy.transform.forward + Vector3.up * 1.5f;
             Instance.gameObject.SetActive(true);
         }
 
-        private void ReleaseObject(Spit Instance) // WHAT DOING?????????
+        private void ReleaseObject(Spit Instance) // Unsure what this does
         {
             Instance.gameObject.SetActive(false);
         }

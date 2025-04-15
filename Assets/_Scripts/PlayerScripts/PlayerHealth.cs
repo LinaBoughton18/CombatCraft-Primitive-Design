@@ -37,6 +37,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            PlayerHit(2);
+        }
+    }
+
     public void ChangeHealth(int amountToChange)
     {
         //Debug.Log("playerHealth currently = " + playerHealth);

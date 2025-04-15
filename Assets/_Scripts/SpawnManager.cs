@@ -21,10 +21,13 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnItem("Burberry", new Vector3(-4.31f, -4.32f, 0));
-        SpawnItem("Popping Seeds", new Vector3(-2.7f, -4.32f, 0));
-        SpawnItem("Neptune Salt", new Vector3(-1.4f, -4.32f, 0));
-        SpawnItem("Foxtail Leaf", new Vector3(0f, -4.32f, 0));
+        for (int i = 0; i < 10; i++)
+        {
+            SpawnItem("Burberry", new Vector3(-4.31f, -4.32f, 0));
+            SpawnItem("Popping Seeds", new Vector3(-2.7f, -4.32f, 0));
+            SpawnItem("Neptune Salt", new Vector3(-1.4f, -4.32f, 0));
+            SpawnItem("Foxtail Leaf", new Vector3(0f, -4.32f, 0));
+        }
 
         //SpawnEnemy("Circle", new Vector3(9, 2, 0));
         //SpawnEnemy("Circle", new Vector3(8, -7, 0));

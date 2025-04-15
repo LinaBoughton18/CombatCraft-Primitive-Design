@@ -74,7 +74,7 @@ public class LlamaEnemy : Enemy
         EnemyFSM.AddState(EnemyState.Chase, new ChaseState(true, this, Player.transform));
         EnemyFSM.AddState(EnemyState.Spit, new SpitState(true, this, SpitPrefab, OnAttack));
         EnemyFSM.AddState(EnemyState.Bounce, new BounceState(true, this, /*BounceImpactParticleSystem,*/ OnBounce));
-        EnemyFSM.AddState(EnemyState.Roll, new RollState(true, this, OnRoll));
+        //EnemyFSM.AddState(EnemyState.Roll, new RollState(true, this, OnRoll));
         EnemyFSM.AddState(EnemyState.Attack, new AttackState(true, this, OnAttack));
 
         // Sets the start state to idle (by default, the first state you add is set to idle)
@@ -109,12 +109,12 @@ public class LlamaEnemy : Enemy
         // Roll Transitions
         // In the video (20:45) adding true to the end of some of these forced an instant transition
         // However, the update to HFSM seems to break this???
-        EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Chase, EnemyState.Roll, ShouldRoll));
-        EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Idle, EnemyState.Roll, ShouldRoll));
-        EnemyFSM.AddTriggerTransition(StateEvent.RollImpact,
-            new Transition<EnemyState>(EnemyState.Roll, EnemyState.Bounce, null));
-        EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Roll, EnemyState.Chase, IsNotWithinIdleRange));
-        EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Roll, EnemyState.Idle, IsWithinIdleRange));
+        //EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Chase, EnemyState.Roll, ShouldRoll));
+        //EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Idle, EnemyState.Roll, ShouldRoll));
+        //EnemyFSM.AddTriggerTransition(StateEvent.RollImpact,
+        //    new Transition<EnemyState>(EnemyState.Roll, EnemyState.Bounce, null));
+        //EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Roll, EnemyState.Chase, IsNotWithinIdleRange));
+        //EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Roll, EnemyState.Idle, IsWithinIdleRange));
             
         // Bounce transitions
         EnemyFSM.AddTransition(new Transition<EnemyState>(EnemyState.Chase, EnemyState.Bounce, ShouldBounce));
@@ -148,18 +148,18 @@ public class LlamaEnemy : Enemy
         RangeAttackPlayerSensor.OnPlayerExit += RangeAttackPlayerSensor_OnPlayerExit;
         MeleePlayerSensor.OnPlayerEnter += MeleePlayerSensor_OnPlayerEnter;
         MeleePlayerSensor.OnPlayerExit += MeleePlayerSensor_OnPlayerExit;
-        RollImpactSensor.OnCollision += RollImpactSensor_OnCollision;
+        //RollImpactSensor.OnCollision += RollImpactSensor_OnCollision;
     }
 
     // A collider is used to detect when the llama collides with something during its roll, which will end the roll
     // Raises an event that will 
-    private void RollImpactSensor_OnCollision(Collision2D Collision)
-    {
-        EnemyFSM.Trigger(StateEvent.RollImpact);
-        LastRollTime = Time.time;
-        LastAttackTime = Time.time;
-        RollImpactSensor.gameObject.SetActive(false);
-    }
+    //private void RollImpactSensor_OnCollision(Collision2D Collision)
+    //{
+    //    EnemyFSM.Trigger(StateEvent.RollImpact);
+    //    LastRollTime = Time.time;
+    //    LastAttackTime = Time.time;
+    //    RollImpactSensor.gameObject.SetActive(false);
+    //}
 
     // FOR ALL BELOW!
     // Discussed at 19:00 in the video!
