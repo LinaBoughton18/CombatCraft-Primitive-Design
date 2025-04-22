@@ -1,11 +1,19 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+------------------------------- CURRENTLY UNUSED IN GAME ----------------------------------
+
+An old tester script used in conjunction with ParticleConeSpawner, which spawns in a bunch of particle prefabs with this script attached.
+On instantiation, this script simply moves the particle in a random direction (as given by ParticleConeSpawner)
+until it reaches its maximum distance (also as determined by ParticleConeSpawner).
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpellParticleMovement : MonoBehaviour
 {
-    // Moves a particle in a direction for for a certain distance
-
+    // All given by ParticleConeSpawner
     private Vector3 moveDirection;
     private float maxDistance;
     private Vector3 startPosition;
@@ -19,10 +27,9 @@ public class SpellParticleMovement : MonoBehaviour
 
     void Update()
     {
-        // Move the particle
         transform.position += moveDirection * Time.deltaTime;
 
-        // Despawn the particle if it exceeds the max distance
+        // Despawns the particle at maxDistance
         if (Vector3.Distance(startPosition, transform.position) >= maxDistance)
         {
             Destroy(gameObject);

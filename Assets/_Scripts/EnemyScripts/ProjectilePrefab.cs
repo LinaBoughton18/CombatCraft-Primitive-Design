@@ -1,3 +1,10 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+------------------------------- CURRENTLY UNUSED IN GAME ----------------------------------
+
+A script for an enemy projectile attack that moves a particle towards the player.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

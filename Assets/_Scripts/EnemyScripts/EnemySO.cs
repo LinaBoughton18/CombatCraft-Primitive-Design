@@ -1,3 +1,10 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Stores all unique information about an enemy (name, sprite/image (can include animations in the future), etc.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +25,6 @@ public class EnemySO : ScriptableObject
     public List<ItemTuple> itemsDropped;
 
 
-    // WILL store: weaknesses/resistances/immmunities
-    // MIGHT also store: enemy attackset, enemy movement set, enemy finite state machine???
+    // WILL LATER store: weaknesses/resistances/immmunities, enemy attackset, enemy movement set, enemy finite state machine(?)
 
 }

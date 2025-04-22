@@ -1,3 +1,10 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// Stores spell shapes as scriptable objects
+
+//-----------------------------------------------------------------------------------------//
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +19,6 @@ public class SpellShapeSO : ScriptableObject, ISpellShape
 
     public void Execute()
     {
-        
+        // No implementation here because the child classes will do that!
     }
 }

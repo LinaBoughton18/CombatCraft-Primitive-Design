@@ -1,3 +1,10 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Manages an individual item slot in the player's inventory (every slot has this script attached).
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +14,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEditor;
 
-public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
+public class ItemSlot : MonoBehaviour, IPointerClickHandler // adds clickability
 {
     //===== ITEM DATA =====//
     public ItemSO itemSO; // A reference to the data about the item
@@ -46,6 +53,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
         isFull = false;
     }
 
+    // Called by inventory manager to try to add an item to this slot
     public int AddItem(ItemSO itemSO, int quantity)
     {
         // Check to see if the slot is already full, if it is then return the quantity & exit
@@ -95,7 +103,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
 
     public void OnLeftClick()
     {
-        // NOT NEEDED FOR ME (PART OF TUTORIAL) BUT STILL HANDY TO REFERENCE
+        // This bit is CURRENTLY UNUSED (part of the tutorial I referenced, but still handy to reference)
         // In the inventory, when you click on an already selected itemSlot, use the item
         /*
         // If the slot is already selected, use the item
@@ -138,6 +146,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler //adds clickability
         itemDescriptionImage.sprite = emptySprite;
     }
 
+    // When the item slot is right-clicked, drop the item
     public void OnRightClick()
     {
         // Create a new item that spawns by the player

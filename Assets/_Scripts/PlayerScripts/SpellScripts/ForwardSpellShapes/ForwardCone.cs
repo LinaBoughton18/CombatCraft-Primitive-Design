@@ -1,3 +1,10 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+A child class of SpellShapeSO -> spawns spell particles in a cone.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +12,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ForwardCone : SpellShapeSO
 {
-    // LATER, THESE OUGHT TO CHANGE DYNAMICALLY, NOT BE SET AT THESE VALUES
-    [Header("Cone Settings")]
+    // LATER, these can be changed dynamically (by the Spell class)
     public float coneAngle = 30f; // Half of the cone's total angle
     public float coneLength = 5f; // Maximum distance the particles will travel
     public int particleCount = 50; // Number of particles to spawn
-
-    [Header("Particle Settings")]
     public GameObject particlePrefab; // Prefab for the particle
 
     public void Execute()
@@ -21,24 +25,24 @@ public class ForwardCone : SpellShapeSO
 
     void SpawnParticles()
     {
-        // Get the player's position
+        // Gets the player's position
         Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
-        // Calculate the direction to the mouse
+        // Calculates the direction to the player's moues
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0f; // Ensure the Z position matches the player's 2D plane
+        mouseWorldPosition.z = 0f;
         Vector3 coneDirection = (mouseWorldPosition - playerPosition).normalized;
 
-        // Spawn particles within the cone
+        // Spawns particles within the cone
         for (int i = 0; i < particleCount; i++)
         {
-            // Generate a random direction within the cone
+            // Generates a random direction within the cone
             Vector3 randomDirection = GetRandomDirectionInCone(coneDirection, coneAngle);
 
-            // Instantiate the particle
+            // Instantiates the particle
             GameObject particle = Instantiate(particlePrefab, playerPosition, Quaternion.identity);
 
-            // Get the ParticleMover component and set up its movement
+            // Gets the ParticleMover component and sets up  movement
             SpellParticleMovement mover = particle.GetComponent<SpellParticleMovement>();
             if (mover != null)
             {
@@ -49,11 +53,9 @@ public class ForwardCone : SpellShapeSO
 
     Vector3 GetRandomDirectionInCone(Vector3 coneDirection, float angle)
     {
-        // Generate a random rotation within the cone
+        // Generates a random direction within the cone
         float randomAngle = Random.Range(-angle, angle);
         Quaternion rotation = Quaternion.AngleAxis(randomAngle, Vector3.forward);
-
-        // Apply the rotation to the cone direction
         return rotation * coneDirection;
     }
 

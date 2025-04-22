@@ -1,10 +1,15 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+This simple class has storage for an itemSO and a quantity.
+It is used by enemies, who can store the type & quantity of the items they drop upon death (if any)
+
+-----------------------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// This class is currently used for enemies,
-// They can use this class to store the type & quantity of items they drop upon death
 
 [Serializable] // This makes the class editable in the Inspector
 public class ItemTuple

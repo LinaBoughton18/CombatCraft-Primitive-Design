@@ -1,3 +1,11 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Manages the player's inventory, stored as an array, itemSlot[].
+Handles adding & removing items & adding/removing stuff from the spell queue.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,25 +19,10 @@ public class InventoryManager : MonoBehaviour
 
     //=====HUD SELECTION=====//
     public GameObject HUDSelectionBar;
-    //public ItemSlot[] hudItemSlots;    We don't need this I think
+    //public ItemSlot[] hudItemSlots;    (We don't need this methinks)
     public HUDManager HUDManager;
     // An int displaying which HUD row is currently selected (row1, row2, row3, row4) = (0, 5, 10, 15)
     public int HUDRowSelected;
-
-    /*
-    Ok so we can create a list of locations for the HUDSelection to hover over, which would have to correspond with
-    the rows of items in the HUD.
-
-    Meanwhile, in the current list of objects we have, we can cycle through them in groups of 5
-    So they don't necessairly have to be linked, they just need to appear to be
-    
-    When 'q' is pressed, we change the location/set of items selected
-
-    InventoryManager sends over the first 5 items in the item slot list to HUDManager
-    HUDManager sends the item slot information to the individual item slots
-    Inventory Manager tracks the items and communicates with the SpellManager
-     
-    */
 
     //======ITEM SLOTS=====//
     // An array of item slots, which form the inventory
@@ -45,7 +38,7 @@ public class InventoryManager : MonoBehaviour
         UpdateHUD();
     }
 
-    // Update is called once per frame
+    // Responds to player input
     void Update()
     {
         // Getting User Input
@@ -79,7 +72,8 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Called when we use the item
-    // CURRENTLY UNUSED BECAUSE THE TUTORIAL USES ITEMS DIFFERENTLY THAN I DO
+    // CURRENTLY UNUSED BECAUSE THE TUTORIAL I REFERENCED USES ITEMS DIFFERENTLY THAN I DO
+    // but I wanted to keep it around for reference
     public bool UseItem(string itemName)
     {
         for (int i = 0; i < itemSOs.Length; i++)
@@ -97,7 +91,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Adds an item to the inventory
-    // OLD VERSION: public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
     public int AddItem(ItemSO itemSO, int quantity)
     {
         // Cycles through every item slot in the inventory, starting with the first

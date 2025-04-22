@@ -1,10 +1,18 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// This class controls the players movement throughout the scene
+// Detects player input for the WASD keys (horizontal & vertical axis inputs),
+// then moves the player in that direction, factoring in their move speed.
+
+//-----------------------------------------------------------------------------------------//
+
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-
-// This class is for controlling player MOVEMENT!!!!!!!!!!
 
 public class PlayerController : MonoBehaviour
 {

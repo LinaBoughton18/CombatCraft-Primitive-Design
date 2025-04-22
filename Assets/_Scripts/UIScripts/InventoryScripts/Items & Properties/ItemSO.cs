@@ -1,3 +1,14 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Stores all unique information about resources/items (name, sprite (item image), in-game description,
+properties (shape, conditions, damages, etc.)
+
+The Item script handles common behavior for items.
+
+-----------------------------------------------------------------------------------------*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +41,6 @@ public class ItemSO : ScriptableObject
     */
 
     // Can edit in the Unity Editor
-    //public GrandPropertyList.Shape shape;
 
     public SpellShapeSO shape;
 
@@ -41,53 +51,8 @@ public class ItemSO : ScriptableObject
     public GrandPropertyList.Damage[] damageList;
 
 
-
     public DamageSO[] newDamageList;
 
     public ConditionSO[] newConditionList;
 
-    // I might add more types of lists later. The properties should be sorted based on when the enemies (or elements in the environment) call them.
-    // I can also add methods here if I need to.
-
 }
-
-
-
-
-
-
-/*
-// This is some old code from the original inventory tutorial.
-It has two variables, a stat to change and how much to change it by, which is activated when the inventory item is clicked
-I'll be using something else for me :)
-
-public StatToChange statToChange = new StatToChange();
-public enum StatToChange
-{
-    // These can be different as I improve my game
-    none,
-    health,
-    mana,
-    stamina
-}; 
-public int amountToChangeStat;
-
-// Called everytime we want to use an item
-public bool UseItem()
-{
-    if (statToChange == StatToChange.health)
-    {
-        PlayerController playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        if (playerController.playerHealth == playerController.maxPlayerHealth)
-        {
-            return false;
-        }
-        else
-        {
-            playerController.ChangeHealth(amountToChangeStat);
-            return true;
-        }
-    }
-    return false;
-}
-*/

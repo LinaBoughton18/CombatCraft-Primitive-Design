@@ -1,3 +1,13 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// Stores properties & shapes as enumerations
+// Spells reference this list to determine the precedence of their properties & shapes
+// Shall be used to handle conflicting properties
+
+//-----------------------------------------------------------------------------------------//
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +39,5 @@ public class GrandPropertyList
     {
         fire, poison, death, ice, light, earth, metal
     };
-
 
 }

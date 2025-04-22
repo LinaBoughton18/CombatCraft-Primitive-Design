@@ -1,11 +1,24 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Handles input from the player regarding spell creation & instantiates spells as items when the player casts one.
+The core functionality is done in the function SpellPrepAndCast(), which is repeatedly called by the game.
+
+The Spell Prep section checks for any input from the player from the 1-5 keys & adds the items in the corresponding HUD
+slot into the spell. The Spell Cast section checks for input from the three mouse keys, which determine how the spell is
+to be cast. It then spawns the spell in as its own object, passing along all items within & its casting type,
+then clears the spell queue.
+
+-----------------------------------------------------------------------------------------*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpellManager : MonoBehaviour
 {
-    // TESTING PURPOSES ONLY
-    public GameObject particlePrefab;
+    public GameObject particlePrefab; // FOR TESTING PURPOSES ONLY
 
     private InventoryManager inventoryManager;
 
@@ -17,21 +30,21 @@ public class SpellManager : MonoBehaviour
     // The spellQueue UI, updates to match the spellQueue
     public SpellQueueSlot[] spellQueueSlot;
 
-    // A prefab for the casted spells
+    // A base prefab for the casted spells
     public Spell spell;
 
+    // Stores the 3 keys for casting spells forward, area, & self
     private KeyCode forwardCastKey = KeyCode.Mouse0;
     private KeyCode areaCastKey = KeyCode.Mouse1;
     private KeyCode selfCastKey = KeyCode.Mouse2;
     private KeyCode[] castingKeys;
 
-    // Helps with spell!
-    public SpellShapeSO defaultSpellShape; // Lowest ranking spellShape! (Assigned in Unity Editor!)
+    // The default spellShape (lowest priority/precedence) (Assigned in the Unity Editor!)
+    public SpellShapeSO defaultSpellShape; 
 
     void Awake()
     {
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
-
         castingKeys = new KeyCode[] { forwardCastKey, areaCastKey, selfCastKey };
     }
 
@@ -40,16 +53,13 @@ public class SpellManager : MonoBehaviour
         SpellPrepAndCast();
     }
 
-    // THERE ARE EDITS TO DO WITHIN
     public void SpellPrepAndCast()
     {
+        
         #region //----------SPELL PREP----------//
         // Adds or removes items from the SpellQueue
         // Checks for keys #1-#5 down & if those are in the inventory -> Adds components to the spell if available
         // If the corresponding inventory item is already in the spellQueue -> removes the item
-
-        // spellQueueSize = 5
-        // runs as keyDown = 1, 2, 3, 4, 5. Done.
         for (int keyDown = 1; keyDown <= spellQueueSize; keyDown++)
         {
             // Checks if a key has been pressed
@@ -97,6 +107,15 @@ public class SpellManager : MonoBehaviour
         #endregion
 
     }
+
+    // Spawns in a new spell prefab item! Passes along all the spell's info
+    public void SpellCast(int castingType)
+    {
+        Spell newSpell = Instantiate(spell, new Vector2(0, 0), Quaternion.identity);
+        newSpell.PassInfo(spellQueue, castingType);
+    }
+
+    #region //----------SPELL QUEUE HANDLING----------//
 
     // Adds the itemSlotToAdd to the first available slot of the spellQueue
     public void AddToSpellQueue(int correspondingHUDSlotToAdd)
@@ -160,43 +179,6 @@ public class SpellManager : MonoBehaviour
         UpdateSpellQueueUI();
     }
 
-    public void SpellCast(int castingType)
-    {
-        Spell newSpell = Instantiate(spell, new Vector2(0, 0), Quaternion.identity);
-        newSpell.PassInfo(spellQueue, castingType);
-    }
-
-    public void UpdateSpellQueueUI()
-    {
-        //Debug.Log("Hello from UpdateSpellQueueUI");
-        for (int i = 0; i < spellQueueSize; i++)
-        {
-            // Update the UISlot to match the same index in the spellQueue
-            // Iterates through spellQueueSlots, editing the picture to match the corresponding inventory row
-            // Does this by prompting each HUDItemSlot to edit itself, passing the corresponding inventory slot as reference
-            this.spellQueueSlot[i].UpdateSpellQueueSlotUI(spellQueue[i]);
-        }
-    }
-
-    /*
-    2 problems to fix right now:
-    1) How are spells going to be spawned?
-    Items = scriptable objects (immutable, data storage)
-    Spells = prefabs (contain mutable data, might need to spawn in different things)
-
-
-    Spells have inherient properties: origin, direction, shape, size/range, & effects
-    Forward casted spells automatically handle origin (player) & direction (towards mouse), leaving us with shape, size/range, and effects
-    Area casted spells automatically handle origin (mouse), leaving us with direction, shape, size/range, and effects
-    Self casted spells automatically handle origin (player), and disregard direction & shape, leaving us with size/range (or amount) and effects
-
-    2) How are properties going to be added to spells?
-    The items & their properties are stored as scriptable objects.
-    Inventory manager passes the items from the ItemSlots, to the InventoryManager, to the SpellQueue, to the spell function in the queue.
-
-
-    */
-
     // Returns false if spell queue is not empty, true if it is empty
     public bool SpellQueueEmpty()
     {
@@ -209,5 +191,19 @@ public class SpellManager : MonoBehaviour
         }
         return true;
     }
+
+    // Updates the Spell Queue UI (the list beneath the player)
+    public void UpdateSpellQueueUI()
+    {
+        for (int i = 0; i < spellQueueSize; i++)
+        {
+            // Update the UISlot to match the same index in the spellQueue
+            // Iterates through spellQueueSlots, editing the picture to match the corresponding inventory row
+            // Does this by prompting each HUDItemSlot to edit itself, passing the corresponding inventory slot as reference
+            this.spellQueueSlot[i].UpdateSpellQueueSlotUI(spellQueue[i]);
+        }
+    }
+
+    #endregion
 
 }

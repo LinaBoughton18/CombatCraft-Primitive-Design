@@ -1,3 +1,11 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+------------------------------- CURRENTLY UNUSED IN GAME ----------------------------------
+
+An older, now unused implementation of an enemy.
+Is able to pathfind to the player using the A* Pathfinding Project &store enemySO data.
+
+-----------------------------------------------------------------------------------------*/
+
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;

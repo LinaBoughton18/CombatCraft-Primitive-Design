@@ -1,8 +1,15 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+------------------------------- CURRENTLY UNUSED IN GAME ----------------------------------
+
+Stores the spellShapeSO's in a database. Can later be used to reference spellshapes at runtime (if necessary)
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// A list for storying all our spell shapes :)
+// A list for storing all our spell shapes :)
 
 //[CreateAssetMenu(menuName = "SpellShape/Database")]
 public class SpellShapeDatabase : ScriptableObject

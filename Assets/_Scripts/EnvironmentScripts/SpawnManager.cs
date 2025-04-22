@@ -1,3 +1,18 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// This script spawns items into the scene, currently items and enemies.
+
+// For both, it references their base prefabs (itemPrefab & enemyPrefab, repsectively)
+// for basic behaviors such as the ability to pathfind or the ability to be picked up by the player.
+// To assign unique attributes (such as sprites), it references a database of scriptable objects
+// (either itemSODatabase or enemySODatabase) and combines it with the base prefab.
+
+// When the game starts, it currently spawns in 10 of each of the available items in the game
+
+//-----------------------------------------------------------------------------------------//
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +25,7 @@ public class SpawnManager : MonoBehaviour
     private ItemSODatabase itemSODatabase;
 
     // The prefab for a physical enemy
-    public GameObject enemyPrefab; // Set in the Unity editor
+    public GameObject enemyPrefab; // Set in the Unity editor -- Currently AStarEnemy, shall be changed in future versions
     private EnemySODatabase enemySODatabase;
     
     void Awake()
@@ -28,9 +43,6 @@ public class SpawnManager : MonoBehaviour
             SpawnItem("Neptune Salt", new Vector3(-1.4f, -4.32f, 0));
             SpawnItem("Foxtail Leaf", new Vector3(0f, -4.32f, 0));
         }
-
-        //SpawnEnemy("Circle", new Vector3(9, 2, 0));
-        //SpawnEnemy("Circle", new Vector3(8, -7, 0));
     }
 
     

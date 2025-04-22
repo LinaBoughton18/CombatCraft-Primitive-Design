@@ -1,3 +1,11 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// This is a public class that holds reusable debug messages, such a printing out all the items in an array
+// Currently only contains one function, but can be expanded upon as needed
+
+//-----------------------------------------------------------------------------------------//
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +14,6 @@ using UnityEngine;
 using static GrandPropertyList;
 using static UnityEngine.UI.Image;
 using UnityEngine.UIElements;
-
-// This is a class that just holds a bunch of reusable debug messages
 
 public class StockDebug
 {

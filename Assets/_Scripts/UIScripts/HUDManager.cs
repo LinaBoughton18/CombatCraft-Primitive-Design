@@ -1,9 +1,19 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+This is a purely UI based class, used to update the HUD bar in game.
+It makes no actual changes to the inventory, only updates the appearance of the HUD
+when called by InventoryManager.
+To update, it cycles through each HUD slot & calls a function for it to update itself.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// The HUD should NOT be doing any management of items, inventories, etc.
-// The HUD is purely visual, getting all of its instructions from InventoryManager, SpellController, etc.
+// Should NOT be doing any management of items, inventories, etc.
+// Purely visual, getting all of its instructions from InventoryManager
 
 public class HUDManager : MonoBehaviour
 {

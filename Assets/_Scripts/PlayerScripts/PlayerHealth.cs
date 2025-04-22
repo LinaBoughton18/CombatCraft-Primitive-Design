@@ -1,3 +1,13 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// Manages the players health - attached to their hitbox
+// When an enemy collides with the player's hitbox (see OnTriggerEnter2D),
+// the player registers the hit and takes 2 damage (though this value can be edited later on based on the damage type)
+// This script also handles editing the player health UI in the game
+
+//-----------------------------------------------------------------------------------------//
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
     public GameObject healthCanvas;
     public TMP_Text playerHealthText;
 
-    // Start is called before the first frame update
     void Awake()
     {
         healthCanvas = GameObject.Find("HealthCanvas");
@@ -37,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // Detects collisions with the hitbox
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))

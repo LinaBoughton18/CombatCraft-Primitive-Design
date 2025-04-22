@@ -1,3 +1,12 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+This is a purely UI based class, used to update the individual
+It makes no actual changes to the inventory, only updates the appearance of
+individual HUD slots when called by the HUDManager.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +31,6 @@ public class HUDItemSlot : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    // Start is called before the first frame update
     void Awake()
     {
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();

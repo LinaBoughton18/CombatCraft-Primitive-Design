@@ -1,3 +1,13 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Handles each individual spell as its own prefab object.
+
+SpellManager instantiates this script & immediately passes along all its info (spell queue & casting type) by calling PassInfo().
+PassInfo() grabs all the items from the spell queue, 
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,29 +16,37 @@ using UnityEngine;
 
 public class Spell : MonoBehaviour
 {
-    // TESTING PARTICLE
-    public GameObject particlePrefab; // Prefab for the particle
-    public GameObject staticSpellParticle; // For the Wall spell
+    public GameObject particlePrefab; // PARTICLE PREFAB FOR TESTING!
+    public GameObject staticSpellParticle; // A still spell partcile for the Wall-shape spell
 
     #region //------SCENE OBJECTS------//
-    //------SCENE OBJECTS------//
+
+    // References to external objects in the scene
     private GameObject player;
     private SpellManager spellManager;
     private InventoryManager inventoryManager;
+
     #endregion
 
     #region //-----SPELL ITEM LIST-----//
-    [SerializeField] private List<ItemSO> itemList = new List<ItemSO>(); // The list of items used in this spell
+
+    // The list of items used in this spell
+    [SerializeField] private List<ItemSO> itemList = new List<ItemSO>();
+
     #endregion
 
     #region //------SPELL PROPERTY LISTS------//
+
     // Pulling from GrandPropertyList (where all the property types are stored)
     // these are the properties in the spell
+    // VERSION 1: Stores properties as simple enumerations
     [SerializeField] private List<GrandPropertyList.Condition> conditionList = new List<GrandPropertyList.Condition>();
     [SerializeField] private List<GrandPropertyList.Damage> damageList = new List<GrandPropertyList.Damage>();
 
+    // VERSION 2: Stores properties as a list of SOs (references GrandPropertyList for enumeration order)
     [SerializeField] private List<DamageSO> newDamageList = new List<DamageSO>();
     [SerializeField] private List<ConditionSO> newConditionList = new List<ConditionSO>();
+
 
     [SerializeField] private int castingType;
     // VERSION 1: SHAPE AS AN ENUMERATION
@@ -38,21 +56,23 @@ public class Spell : MonoBehaviour
 
     #endregion
 
-    #region //------ADDITIONAL SPELL PROPERTIES------//
+    #region //------SPATIAL SPELL PROPERTIES------//
+
     [SerializeField] private Vector2 origin; // Determines the starting point of the spell
     [SerializeField] private Vector2 mousePosition; // Can be used to calculate the direction of the spell
     [SerializeField] private Vector2 direction; // The direction the spell moves in (if at all)
     [SerializeField] private float scale; // The size of the spell, determined by amount of inputs
+
     #endregion
 
-    //------METHODS------//
     void Awake()
     {
         player = GameObject.Find("Player");
         spellManager = player.GetComponentInChildren<SpellManager>();
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
-
     }
+
+    #region //-----------DETERMINING SPELL PROPERTIES-----------//
 
     // Grabs the items from the spellQueue and puts them in the itemList
     public void PassInfo(ItemSlot[] spellQueue, int castingType)
@@ -72,20 +92,23 @@ public class Spell : MonoBehaviour
         }
         itemList.TrimExcess(); // Removes the excess memory
 
+        // Determines if this is a forward, area, or self casted spell
+        // Since there's only ever one casting type per spell - we don't need a fancy function to figure it out
+        this.castingType = castingType;
+
         // Sets the spells various magical & spacial properties
-        this.castingType = castingType; // Determines if this is a forward, area, or self casted spell
         DetermineProperties();
         DetermineOriginAndMovement();
         DetermineScale();
 
         //PrintSpellProperties();
 
-        // Once all the properties have been collected, spawn the spell in
+        // Once all the properties have been collected, spawn the physical spell in
         CreateSpell();
     }
 
-    #region //-----------DETERMINING SPELL PROPERTIES-----------//
-    // Determine damage, conditions, and shape
+    // Determines damages, conditions, and shape
+    // Iterates through the items used in the spell, grabbing each's list of 
     void DetermineProperties()
     {
         // (For conditionList & damageList, iterate through each using foreach
@@ -95,15 +118,12 @@ public class Spell : MonoBehaviour
 
         // Assigns shape to automatically be the lowest priority shape
         shape = GrandPropertyList.Shape.beam_circle;
-        //Debug.Log("initial shape = " + shape);
         shape2 = spellManager.defaultSpellShape;
-        //Debug.Log("shape assigned! shape = " + shape2.name);
 
         // Iterate through each item in itemList, updating the damage, conditions, and shape as you go
         foreach (ItemSO i in itemList)
         {
-            //Debug.Log("Checking item: " + i.itemName);
-
+            /*
             // CONDITIONS
             // Iterate through every condition in that item's conditionList
             // If that condition is not already in this spell's conditionList, add it
@@ -125,6 +145,7 @@ public class Spell : MonoBehaviour
                     this.damageList.Add(j);
                 }
             }
+            */
 
             #region SHAPE
 
@@ -139,9 +160,6 @@ public class Spell : MonoBehaviour
                 this.shape = shapeToTry;
             }
             //Debug.Log("New shape = " + this.shape);
-
-            // NEW--------------------------
-
 
             #endregion
 
@@ -181,28 +199,28 @@ public class Spell : MonoBehaviour
     }
 
     // Sets the origin & direction for the spell
-    // Since this is forward casted, the origin & direction is handeled by the player & mouse positions
+    // In the future, this will handle all 3 types of casting, but currently only handles forward casting
+    // The origin & direction is handeled by the player & mouse positions
     void DetermineOriginAndMovement()
     {
         // Origin = player position (might need to be slightly offset to prevent the player from hitting themselves)
         origin = player.transform.position;
 
-        // Direction = towards mouse position
+        // Direction = towards mouse position (for forward spells - more spells to come in the future!)
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = (mousePosition - origin).normalized;
     }
 
     void DetermineScale()
     {
-        // For now, scale is the number of items put into a spell
+        // For now, scale is the number of items put into a spell (will change later to reflect properties)
         scale = itemList.Count;
     }
-
-    #endregion //----------------------------------------------//
 
     // A debug message that prints out the properties of the spell
     private void PrintSpellProperties()
     {
+        /*
         Debug.Log("-----------SPELL ITEMS-----------");
         StockDebug.PrintArray(itemList.ToArray(), i => i, "", false);
 
@@ -215,7 +233,10 @@ public class Spell : MonoBehaviour
         Debug.Log("Origin: " + origin + " (should match the player position)");
         Debug.Log("Direction: " + direction);
         Debug.Log("Scale: " + scale);
+        */
     }
+
+    #endregion //----------------------------------------------//
 
     private void CreateSpell()
     {
@@ -235,7 +256,6 @@ public class Spell : MonoBehaviour
 
         // Executes the shape of the spell----------------------------------------------
         // I'm fully aware that this method is poor, but it works for now!
-        Debug.Log("Casting shape " + shape);
         switch ((int)shape)
         {
             case 1:
@@ -434,52 +454,4 @@ public class Spell : MonoBehaviour
 
     #endregion
 
-
-
-
-
-
-
-
-    /*
-    public class ForwardSpellPrefab : MonoBehaviour
-    {
-        // Creates a list to store all the behaviors that will be added to the spell
-        private List<ISpellShape> behaviors = new List<ISpellShape>();
-
-        // Takes a grouping of something (behaviorTypes) & grabs their proper behavior each time
-        public void Initialize(List<Type> behaviorTypes)
-        {
-            // Loops through the list given, grabbing the interface & adding it to our list
-            foreach (Type type in behaviorTypes)
-            {
-                if (typeof(ISpellShape).IsAssignableFrom(type))
-                {
-                    ISpellShape behavior = gameObject.AddComponent(type) as ISpellShape;
-                    
-                    behaviors.Add(behavior);
-                }
-            }
-
-            // Executes all behaviors in the list
-            ExecuteBehaviors();
-        }
-
-        // Executes each behavior in the behaviors list
-        private void ExecuteBehaviors()
-        {
-            foreach (ISpellShape behavior in behaviors)
-            {
-                behavior.Execute(this);
-            }
-        }
-    }
-
-
-
-
-
-
-
-    */
 }

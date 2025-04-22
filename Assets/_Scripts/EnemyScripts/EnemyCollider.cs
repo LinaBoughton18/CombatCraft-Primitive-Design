@@ -1,9 +1,15 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Similar to PlayerHealth script, handles enemies taking damage.
+Needs to be merged with the enemy finite state machine behavior in the future.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
-
 
 public class EnemyCollider : MonoBehaviour
 {

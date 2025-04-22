@@ -1,3 +1,12 @@
+//---------------------------------------- BY LINA ----------------------------------------//
+//-----------------------------------------------------------------------------------------//
+
+// Stores all the itemSOs in the game as a list (ItemSOList), which are pulled from the Unity Editor
+// At runtime, turns the array into a dictionary (ItemSODictionary) for quick reference by the SpawnManager
+// Functions the same as EnemySODatabase
+
+//-----------------------------------------------------------------------------------------//
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

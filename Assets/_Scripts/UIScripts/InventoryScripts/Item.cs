@@ -1,3 +1,10 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+Handles common behavior for items, while the script ItemSO handles all unique information.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,23 +14,25 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     #region //------ITEM DATA------//
-    // The SO that this item pulls its data from
+    // The itemSO that this item pulls its data from
     public ItemSO itemSO;
 
     // Number of items collected when picking up the item
-    // For now, it's set to 1 at the start, since it's just one item
+    // For now, it's set to 1 at the start, but this could perhaps be dynamically set in the spawnManager in the future?
     public int quantity = 1;
     #endregion
 
     #region //------COMPONENTS AND SCENE OBJECTS------//
+
     // Scene Objects
     private InventoryManager inventoryManager;
 
-    // Item Components & Child Objects
-    [SerializeField] private GameObject spriteObject; // Assigned in Unity editor
+    // Item Components
+    [SerializeField] private GameObject spriteObject; // Child object, assigned in Unity editor
     private SpriteRenderer spriteRenderer;
 
     private BoxCollider2D boxCollider;
+
     #endregion
 
     void Awake()
@@ -33,7 +42,8 @@ public class Item : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
     }
-
+    
+    // Item is picked up when the player walks over it
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // When colliding with the player
@@ -54,13 +64,14 @@ public class Item : MonoBehaviour
         }
     }
 
+    // Properly sizes the sprite
     private void FitSpriteToCollider()
     {
-        // Get the size of the sprite & box collider
-        Vector2 spriteSize = spriteRenderer.sprite.bounds.size; // in world unity
+        // Gets the size of the sprite & box collider
+        Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
         Vector2 colliderSize = boxCollider.size;
 
-        // Calculate scale needed to fit sprite within collider
+        // Calculates scale needed to fit sprite within collider
         float scaleX = colliderSize.x / spriteSize.x;
         float scaleY = colliderSize.y / spriteSize.y;
 
@@ -69,6 +80,7 @@ public class Item : MonoBehaviour
         spriteObject.transform.localScale = new Vector3(scale, scale, 1f);
     }
 
+    // When called (by spawnmanager) sends the proper itemSO data to this object
     public void PassItemSOData(ItemSO itemSO)
     {
         // Passes along the proper itemSO

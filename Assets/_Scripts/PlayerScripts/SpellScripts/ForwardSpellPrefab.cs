@@ -1,3 +1,12 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+------------------------------- CURRENTLY UNUSED IN GAME  ---------------------------------
+
+This is an old script that handled movement for a forward-casted spell
+I still want to reference some of its functions and implementations, so it's still here, but all commented out!
+
+-----------------------------------------------------------------------------------------*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

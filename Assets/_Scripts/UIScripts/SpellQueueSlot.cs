@@ -1,9 +1,16 @@
+/*---------------------------------------- BY LINA ----------------------------------------
+-------------------------------------------------------------------------------------------
+
+This is a purely UI based class, used to update the spell queue UI in game.
+It makes no actual changes to what is in the spell queue, only updates the UI to match
+when called by SpellManager.
+
+-----------------------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-// This is a purely UI based class, used to update the temporary spellqueue
 
 public class SpellQueueSlot : MonoBehaviour
 {
